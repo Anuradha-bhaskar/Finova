@@ -10,7 +10,7 @@ const Header = () => {
 		<div className='fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b'>
 			<nav className='container mx-auto flex justify-between items-center py-4 px-4'>
 				<Link href="/">
-					<Image src="/another logo.png" alt="logo" width={200} height={60} className='h-12 w-auto object-contain' />
+					<Image src="/logo.png" alt="logo" width={200} height={60} className='h-8 w-auto object-contain' />
 				</Link>
 				<div className='flex items-center space-x-4'>
 					<SignedIn>
@@ -31,7 +31,7 @@ const Header = () => {
 					</SignedIn>
 					<SignedOut>
 						<SignInButton forceRedirectUrl='/dashboard'>
-							<Button className="text-white" href='/auth/sign-in'>login</Button>
+							<Button variant="outline" className="text-gray-600 border-[#E6EFF4] hover:bg-[#E6EFF4]" href='/auth/sign-in'>login</Button>
 						</SignInButton>
 					</SignedOut>
 					<SignedIn >
