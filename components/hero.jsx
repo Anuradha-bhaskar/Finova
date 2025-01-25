@@ -43,7 +43,7 @@ const HeroSection = () => {
                     <Button size="lg" className="px-8 text-white" >Get Started</Button>
                 </Link>
                 <Link href="/dashboard">
-                    <Button size="lg" variant="outline" className="px-8 text-gray-600 hover:bg-[#E6EFF4]" >Watch Demo</Button>
+                    <Button size="lg" variant="outline" className="px-8 text-gray-600 hover:bg-[#E6F0F7]" >Watch Demo</Button>
                 </Link>
             </div>
             <div className='hero-image-wrapper mt-5 md:mt-0'>
