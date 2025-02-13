@@ -51,7 +51,7 @@ export async function createAccount(data){
         if(shouldBeDefault){
             await db.account.updateMany({
                 where:{
-                    userId: user.id,
+                    userId: user.id, isDefault: true
                 },
                 data:{
                     isDefault: false,
