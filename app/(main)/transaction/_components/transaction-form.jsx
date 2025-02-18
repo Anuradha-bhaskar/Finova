@@ -19,11 +19,12 @@ import { transactionSchema } from "@/app/lib/schema";
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { CalendarIcon, Loader2 } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 import { Calendar } from "@/components/ui/calendar"
 import { Switch } from '@/components/ui/switch';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import ReceiptScanner from './recipt-scanner';
 
 
 const AddTransactionForm = ({ accounts, categories }) => {
@@ -51,26 +52,58 @@ const AddTransactionForm = ({ accounts, categories }) => {
     const onSubmit = async (data) => {
         const formData = {
             ...data,
-            amount : parseFloat(data.amount),
+            amount: parseFloat(data.amount),
 
         };
         transactionFn(formData);
     }
 
     useEffect(() => {
-        if(transactionResult?.success && !transactionLoading){
+        if (transactionResult?.success && !transactionLoading) {
             toast.success("Transaction created successfully");
             reset();
             router.push(`/account/${transactionResult.data.accountId}`);
         }
-    },[transactionResult, transactionLoading]);
+    }, [transactionResult, transactionLoading]);
 
     const type = watch('type');
     const isRecurring = watch('isRecurring');
     const filteredCategories = categories.filter((category) => category.type === type);
+
+    const handleScanComplete = (scannedData) => {
+        console.log(scannedData);
+        if (scannedData) {
+            setValue('amount', scannedData.amount.toString());
+            // Parse and set the date properly
+            const parsedDate = new Date(scannedData.date);
+            setDate(parsedDate); // This updates the calendar UI
+            setValue('date', parsedDate); // This updates the form state
+            if (scannedData.description) {
+                setValue('description', scannedData.description)
+            };
+            // Debug: Check categories
+            console.log("Available categories:", categories);
+
+            // Find category ID from category name
+            const matchedCategory = categories.find(cat =>
+                cat.name.toLowerCase().trim() === scannedData.category.toLowerCase().trim()
+            );
+
+            if (matchedCategory) {
+                console.log("Matched category ID:", matchedCategory.id);
+                setValue('category', matchedCategory.id, { shouldValidate: true, shouldDirty: true });
+                console.log("Form category after setting:", getValues('category')); // Debugging
+            }
+             else {
+                console.warn("No matching category found for", scannedData.category);
+            }
+        }
+    };
+
     return (
         <form className='space-y-6' onSubmit={handleSubmit(onSubmit)} >
             {/* AI recipt Scanner */}
+            <ReceiptScanner onScanComplete={handleScanComplete} />
 
             {/* Type */}
             <div className='space-y-2'>
