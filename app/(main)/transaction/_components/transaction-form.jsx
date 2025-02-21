@@ -33,7 +33,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
     const editId = searchParams.get('edit');
 
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date());``
     const { register, setValue, handleSubmit, formState: { errors }, watch, getValues, reset } = useForm({
         resolver: zodResolver(transactionSchema),
         defaultValues: 
@@ -45,7 +45,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
             accountId: initialData.accountId,
             date: new Date(initialData.date),
             isRecurring: initialData.isRecurring,
-            ...initialData.recurringInterval && { recurringInterval: initialData.recurringInterval }
+            ...(initialData.recurringInterval && { recurringInterval: initialData.recurringInterval }),
         } : {
             type: 'EXPENSE',
             amount: '',
@@ -66,7 +66,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
         const formData = {
             ...data,
             amount: parseFloat(data.amount),
-
+            date: date,
         };
         if (editMode) {
             transactionFn(editId, formData);
@@ -86,6 +86,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
 
     const type = watch('type');
     const isRecurring = watch('isRecurring');
+    const selectedCategory = watch('category');
     const filteredCategories = categories.filter((category) => category.type === type);
 
     const handleScanComplete = (scannedData) => {
@@ -99,24 +100,17 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
             if (scannedData.description) {
                 setValue('description', scannedData.description)
             };
-            // Debug: Check categories
-            console.log("Available categories:", categories);
-
-            // Find category ID from category name
-            const matchedCategory = categories.find(cat =>
-                cat.name.toLowerCase().trim() === scannedData.category.toLowerCase().trim()
-            );
-
-            if (matchedCategory) {
-                console.log("Matched category ID:", matchedCategory.id);
-                setValue('category', matchedCategory.id, { shouldValidate: true, shouldDirty: true });
-                console.log("Form category after setting:", getValues('category')); // Debugging
+            if (scannedData.category) {
+                setValue('category', scannedData.category);
             }
-             else {
-                console.warn("No matching category found for", scannedData.category);
-            }
+            toast.success('Receipt scanned successfully');
         }
     };
+
+    const handleDateChange = (newDate) => {
+        setDate(newDate);
+        setValue('date', newDate);
+    }
 
     return (
         <form className='space-y-6' onSubmit={handleSubmit(onSubmit)} >
@@ -179,6 +173,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
                 <label className='text-sm font-medium' >Category</label>
                 <Select
                     onValueChange={(value) => setValue('category', value)}
+                    value={selectedCategory}
                     defaultValue={getValues('category')}
                 >
                     <SelectTrigger>
@@ -210,7 +205,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
                         <Calendar
                             mode="single"
                             selected={date}
-                            onSelect={setDate}
+                            onSelect={handleDateChange}
                             disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
                             initialFocus
                             className="bg-white"

@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import React, { use, useEffect, useMemo, useState } from 'react'
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Clock, MoreHorizontal, RefreshCw, Search, Trash, X } from "lucide-react";
 
-import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { DropdownMenuContent, DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -281,14 +281,14 @@ const TransactionTable = ({ transactions }) => {
                     {transaction.type === "INCOME" ? "+ " : "- "}
                     &#8377;{transaction.amount.toFixed(2)}
                   </TableCell>
-                  <TableCell>{transaction.recurring ?
+                  <TableCell>{transaction.isRecurring ?
                     (
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger>
-                            <Badge variant="outline" className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200">
+                            <Badge variant="secondary" className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200">
                               <RefreshCw className="h-3 w-3" />
-                              {RECURRING_INTERVALS[transaction.recurring]}
+                              {RECURRING_INTERVALS[transaction.recurringInterval]}
                             </Badge>
                           </TooltipTrigger>
                           <TooltipContent>
@@ -297,17 +297,17 @@ const TransactionTable = ({ transactions }) => {
                                 Next Date:
                               </div>
                               <div>
-                                {format(new Date(transaction.nextRecurringDate), "PP")}
+                                {format(new Date(transaction.nextRecurringDate), "PPP")}
                               </div>
                             </div>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     )
-                    : <Badge variant="outline" className="gap-1 text-slate-600">
+                    :( <Badge variant="outline" className="gap-1 text-slate-600">
                       <Clock className="h-3 w-3" />
                       One-time
-                    </Badge>}
+                    </Badge>)}
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>

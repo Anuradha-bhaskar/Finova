@@ -3,11 +3,11 @@ import { scanReceipt } from '@/actions/transaction';
 import { Button } from '@/components/ui/button';
 import useFetch from '@/hooks/use-fetch';
 import { Camera, Loader2 } from 'lucide-react';
-import React, { use, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { toast } from 'sonner';
 
 const ReceiptScanner = ({onScanComplete}) => {
-  const fileInputRef = useRef();
+  const fileInputRef = useRef(null);
   const {
     loading: scanReceiptLoading,
     fn: scanReceiptFn,
@@ -27,10 +27,10 @@ const ReceiptScanner = ({onScanComplete}) => {
       onScanComplete(scannedData);
       toast.success('Receipt scanned successfully');
     }
-  }, [scannedData, scanReceiptLoading]);
+  }, [scanReceiptLoading, scannedData]);
 
   return (
-    <div>
+    <div className='flex items-center gap-4'>
       <input type="file" ref={fileInputRef} className='hidden' accept='image/*' capture='environment' 
         onChange={(e)=> {
             const file = e.target.files?.[0];
@@ -40,7 +40,8 @@ const ReceiptScanner = ({onScanComplete}) => {
         }}
       />
       <Button type="button" onClick={()=>fileInputRef.current?.click()} disabled={scanReceiptLoading}
-      className='text-white w-full hover:opacity-90 animate-gradient bg-gradient-to-br from-purple-400 via-blue-400 to-purple-400 transition-opacity' >{scanReceiptLoading?
+      className='text-white w-full hover:opacity-90 animate-gradient bg-gradient-to-br from-purple-400 via-blue-400 to-purple-400 transition-opacity' >
+        {scanReceiptLoading?
         <>
             <Loader2 className='mr-2 animate-spin' />
             <span>Scanning Receipt...</span>
