@@ -59,18 +59,6 @@ CREATE TABLE "transactions" (
     CONSTRAINT "transactions_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "budgets" (
-    "id" TEXT NOT NULL,
-    "amount" DECIMAL(65,30) NOT NULL,
-    "lastAlertSent" TIMESTAMP(3),
-    "userId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "budgets_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "users_clerkUserId_key" ON "users"("clerkUserId");
 
