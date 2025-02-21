@@ -74,12 +74,6 @@ CREATE INDEX "transactions_userId_idx" ON "transactions"("userId");
 -- CreateIndex
 CREATE INDEX "transactions_accountId_idx" ON "transactions"("accountId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "budgets_userId_key" ON "budgets"("userId");
-
--- CreateIndex
-CREATE INDEX "budgets_userId_idx" ON "budgets"("userId");
-
 -- AddForeignKey
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -89,5 +83,3 @@ ALTER TABLE "transactions" ADD CONSTRAINT "transactions_userId_fkey" FOREIGN KEY
 -- AddForeignKey
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_accountId_fkey" FOREIGN KEY ("accountId") REFERENCES "accounts"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- AddForeignKey
-ALTER TABLE "budgets" ADD CONSTRAINT "budgets_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

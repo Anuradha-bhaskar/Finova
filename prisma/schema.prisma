@@ -22,7 +22,6 @@ model User {
   imageUrl      String?
   transactions  Transaction[]
   accounts      Account[]
-  budgets       Budget[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
