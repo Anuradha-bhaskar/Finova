@@ -11,12 +11,6 @@ import {
   // Features Data
   export const featuresData = [
     {
-      icon: <BarChart3 className="h-8 w-8 text-[#4A90E2]" />,
-      title: "Advanced Analytics",
-      description:
-        "Get detailed insights into your spending patterns with AI-powered analytics",
-    },
-    {
       icon: <Receipt className="h-8 w-8 text-[#4A90E2]" />,
       title: "Smart Receipt Scanner",
       description:
@@ -31,6 +25,12 @@ import {
       icon: <CreditCard className="h-8 w-8  text-[#4A90E2]" />,
       title: "Multi-Account Support",
       description: "Manage multiple accounts and credit cards in one place",
+    },
+    {
+      icon: <BarChart3 className="h-8 w-8 text-[#4A90E2]" />,
+      title: "Advanced Analytics",
+      description:
+        "Get detailed insights into your spending patterns with AI-powered analytics",
     },
     {
       icon: <Globe className="h-8 w-8  text-[#4A90E2]" />,

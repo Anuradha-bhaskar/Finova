@@ -9,8 +9,6 @@ async function DashboardPage(){
   const accounts = await getUserAccounts();
   return (
     <div className='px-5'>
-        {/* Budget Progress */}
-        {/* Overview */}
         {/* Accounts Grid */}
         <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
           <CreateAccountDrawer>

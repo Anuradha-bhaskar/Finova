@@ -33,7 +33,7 @@ const AddTransactionForm = ({ accounts, categories, editMode= false, initialData
     const editId = searchParams.get('edit');
 
 
-    const [date, setDate] = useState(new Date());``
+    const [date, setDate] = useState( editMode && initialData ? new Date(initialData.date) : new Date());
     const { register, setValue, handleSubmit, formState: { errors }, watch, getValues, reset } = useForm({
         resolver: zodResolver(transactionSchema),
         defaultValues: 

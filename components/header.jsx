@@ -14,6 +14,9 @@ const Header = async () => {
 				<Link href="/">
 					<Image src="/logo.png" alt="logo" width={200} height={60} className='h-8 w-auto object-contain' />
 				</Link>
+
+			
+				{/* Action Buttons */}
 				<div className='flex items-center space-x-4'>
 					<SignedIn>
 						<Link href={'/dashboard'} className='text-gray-600 flex items-center gap-2'>
